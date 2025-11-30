@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShield - Crop Diseases</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT_CODE.js" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Optional: Custom style for image to ensure consistency */
+        .disease-image-box img {
+            max-height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid container">
+            <a class="navbar-brand fs-4" href="{% url 'home' %}">
+                <img src="{% static 'images/logoo.png' %}" alt="AgriShield Logo" width="40" height="80" class="d-inline-block align-text-top me-2 rounded-circle"> 
+                AgriShield
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'crops' %}">Crops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'diseases' %}">Diseases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'organic' %}">Organic</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning ms-lg-3" href="{% url 'upload' %}">
+                            <i class="fas fa-camera me-1"></i> Detect Disease
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container my-5">
+        
+        <h1 class="text-center text-danger mb-4"><i class="fas fa-bug me-2"></i> Comprehensive Disease Database</h1>
+        <p class="lead text-center mb-5 text-muted">A repository of common crop diseases, their symptoms, causes, and recommended treatments (scientific and organic).</p>
+
+        {% for disease in diseases %}
+            <div class="card mb-4 shadow-lg border-danger" id="disease-{{ disease.id }}">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">{{ disease.name }}</h4>
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col-md-4 text-center mb-4 mb-md-0 disease-image-box">
+                            <h5 class="text-secondary"><i class="fas fa-image me-1"></i> Visual Example</h5>
+                            <hr class="mt-0">
+                            {% if disease.image %}
+                                <img src="{{ disease.image.url }}" 
+                                     alt="{{ disease.name }} image" 
+                                     class="img-fluid rounded shadow-sm">
+                            {% else %}
+                                <div class="p-4 bg-light rounded border">
+                                    <i class="fas fa-camera-slash fa-3x text-muted"></i>
+                                    <p class="text-muted mt-2 small">No image uploaded for this disease yet.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <h5 class="text-info"><i class="fas fa-flask me-1"></i> Scientific Treatment</h5>
+                                    <div class="bg-light p-3 rounded h-100">
+                                        <p class="small mb-0">{{ disease.scientific_treatment|safe|linebreaksbr }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <h5 class="text-success"><i class="fas fa-leaf me-1"></i> Organic Treatment</h5>
+                                    <div class="bg-light p-3 rounded h-100">
+                                        <p class="small mb-0">{{ disease.organic_treatment|safe|linebreaksbr }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-light p-0">
+                    <div class="accordion accordion-flush" id="diseaseAccordion-{{ disease.id }}">
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold small py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCause-{{ disease.id }}" aria-expanded="false" aria-controls="collapseCause-{{ disease.id }}">
+                                    <i class="fas fa-search text-primary me-2"></i> Click to see Cause & Detailed Symptoms
+                                </button>
+                            </h2>
+                            <div id="collapseCause-{{ disease.id }}" class="accordion-collapse collapse" data-bs-parent="#diseaseAccordion-{{ disease.id }}">
+                                <div class="accordion-body bg-white border-top">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Cause:</h6>
+                                            <p>{{ disease.cause|safe|linebreaksbr }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Symptoms:</h6>
+                                            <p>{{ disease.symptoms|safe|linebreaksbr }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold small py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCrops-{{ disease.id }}" aria-expanded="false" aria-controls="collapseCrops-{{ disease.id }}">
+                                    <i class="fas fa-leaf text-secondary me-2"></i> Click to see Affected Crops
+                                </button>
+                            </h2>
+                            <div id="collapseCrops-{{ disease.id }}" class="accordion-collapse collapse" data-bs-parent="#diseaseAccordion-{{ disease.id }}">
+                                <div class="accordion-body bg-white border-top">
+                                    {% if disease.affected_crops.all %}
+                                        <p class="mb-0">
+                                            **Commonly Found On:** {% for crop in disease.affected_crops.all %}
+                                                <span class="badge bg-secondary me-2">{{ crop.name }}</span>
+                                            {% endfor %}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-muted mb-0">No specific crops are linked to this disease yet.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+        {% empty %}
+            <div class="alert alert-warning text-center mt-5" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i> **No Diseases Found!** Please ensure you have added diseases and images in the Django Admin panel.
+            </div>
+        {% endfor %}
+
+    </main>
+
+    <footer class="bg-dark text-white text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 AgriShield Project. Developed by B.Tech Group 5.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
