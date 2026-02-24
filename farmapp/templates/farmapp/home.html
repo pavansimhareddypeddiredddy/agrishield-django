@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriShield - AI Crop Protection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT_CODE.js" crossorigin="anonymous"></script> 
+    <script src="https://kit.fontawesome.com/YOUR_ACTUAL_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script> 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container-fluid container">
-            
             <a class="navbar-brand fs-4" href="{% url 'home' %}">
                 <img src="{% static 'images/logoo.png' %}" 
                      alt="AgriShield Logo" 
@@ -21,11 +20,10 @@
                      class="d-inline-block align-text-top me-2 rounded-circle"> 
                 AgriShield
             </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -68,15 +66,16 @@
             <div class="col-md-7 order-md-1">
                 <h2 class="featurette-heading fw-normal lh-1">A Final Year Project: <span class="text-success">Bridging the Technology Gap.</span></h2>
                 <p class="lead mt-3">
-                    We are a dedicated group of **five B.Tech final-year students** focused on solving real-world agricultural problems. In India, many farmers still face significant crop loss because they cannot quickly or accurately identify diseases.
+                    We are a dedicated group of <strong>five B.Tech final-year students</strong> focused on solving real-world agricultural problems. In India, many farmers still face significant crop loss because they cannot quickly or accurately identify diseases.
                 </p>
                 <p class="lead">
-                    **AgriShield** is our solution. Our goal is to provide a simple, powerful tool that requires no technical expertise. By replacing manual inspection with **instant AI detection**, we empower farmers to take timely action, ensuring healthier crops and better yields. This project is our commitment to the future of sustainable Indian agriculture.
+                    <strong>AgriShield</strong> is our solution. Our goal is to provide a simple, powerful tool that requires no technical expertise. By replacing manual inspection with <strong>instant AI detection</strong>, we empower farmers to take timely action, ensuring healthier crops and better yields. This project is our commitment to the future of sustainable Indian agriculture.
                 </p>
             </div>
             <div class="col-md-5 order-md-2 text-center">
                 <img src="{% static 'images/homeimage.png' %}" 
-                     class="img-fluid rounded shadow w-100 h-100 object-fit-cover" 
+                     class="img-fluid rounded shadow w-100 h-100" 
+                     style="object-fit: cover;" 
                      alt="Farmer using technology to check a plant">
             </div>
         </div>
