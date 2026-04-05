@@ -1,0 +1,154 @@
+{% extends 'farmapp/base.html' %}
+{% load static %}
+
+{% block title %}AgriShield - AI Scanner{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. THE GLASS CARD */
+    .upload-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transition: all 0.4s ease;
+    }
+
+    /* 2. THE DASHED UPLOAD BOX */
+    .upload-box {
+        border: 3px dashed #2ecc71;
+        background: #f9fffb;
+        padding: 50px 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-box:hover {
+        background: #e8f5e9;
+        transform: scale(1.01);
+        border-style: solid;
+    }
+
+    /* 3. THE 3D SCANNER LINE (This wins prizes!) */
+    .scanner-container {
+        position: relative;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .scan-line {
+        width: 100%;
+        height: 4px;
+        background: #2ecc71;
+        box-shadow: 0 0 15px #2ecc71, 0 0 30px #2ecc71;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        display: none; /* Hidden until Analyze is clicked */
+        animation: moveScan 2s linear infinite;
+    }
+
+    @keyframes moveScan {
+        0% { top: 0%; opacity: 1; }
+        50% { top: 100%; opacity: 1; }
+        100% { top: 0%; opacity: 1; }
+    }
+
+    .image-preview {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 15px;
+        display: block;
+    }
+
+    /* Loading Spinner */
+    .loading-text {
+        display: none;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+</style>
+
+<div class="container animate__animated animate__fadeIn">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-success">AI <span class="text-dark">Plant Protection</span></h1>
+        <p class="text-muted">Our Neural Network is ready. Upload a leaf photo to begin diagnosis.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="upload-card shadow-lg p-5">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'upload' %}" id="analyzeForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4" id="drop-area">
+                        <label for="image_input" class="d-block text-center upload-box rounded-4" id="upload_label">
+                            <div class="animate__animated animate__bounce animate__infinite animate__slow">
+                                <i class="fas fa-cloud-upload-alt fa-4x text-success mb-3"></i>
+                            </div>
+                            <h4 class="fw-bold">Drop Image Here</h4>
+                            <p class="text-muted">or click to browse from files</p>
+                        </label>
+                        <input type="file" name="image" id="image_input" accept="image/*" class="d-none" required>
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <div class="scanner-container">
+                            <div class="scan-line" id="scan_line"></div>
+                            <img id="image_preview" class="image-preview d-none" src="#" alt="Image Preview">
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-pill shadow-lg fw-bold" id="submitBtn">
+                            <i class="fas fa-microscope me-2"></i> START ANALYSIS
+                        </button>
+                        
+                        <div class="loading-text mt-3 text-success" id="loading_status">
+                            <div class="spinner-border spinner-border-sm me-2"></div> 
+                            AI IS SCANNING PATTERNS...
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('image_input');
+    const preview = document.getElementById('image_preview');
+    const scanLine = document.getElementById('scan_line');
+    const form = document.getElementById('analyzeForm');
+    const loadingStatus = document.getElementById('loading_status');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Show Preview when file is selected
+    input.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('d-none');
+                // Auto-scroll to preview
+                preview.scrollIntoView({ behavior: 'smooth' });
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Start Scanner Animation on Submit
+    form.onsubmit = function() {
+        if(input.files.length > 0) {
+            scanLine.style.display = 'block'; // Show the laser line
+            loadingStatus.style.display = 'block'; // Show "AI is thinking"
+            submitBtn.innerHTML = "ANALYZING...";
+            submitBtn.classList.add('disabled');
+        }
+    };
+</script>
+{% endblock %}
