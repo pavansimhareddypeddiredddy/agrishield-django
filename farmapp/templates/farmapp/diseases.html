@@ -1,0 +1,129 @@
+{% extends 'farmapp/base.html' %}
+{% load static %}
+
+{% block title %}AgriShield | Disease Encyclopedia{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. HERO SECTION */
+    .disease-hero {
+        background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        border-radius: 30px;
+        padding: 60px 20px;
+        margin-bottom: 50px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    /* 2. 3D DISEASE CARDS */
+    .disease-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        border-bottom: 5px solid #dc3545; /* Red accent for "Danger/Disease" */
+    }
+
+    .disease-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .disease-img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .disease-card:hover .disease-img {
+        transform: scale(1.1);
+    }
+
+    /* 3. SEARCH BAR STYLING */
+    .search-box {
+        border-radius: 50px;
+        padding: 15px 25px;
+        border: 2px solid #e0e0e0;
+        transition: all 0.3s;
+    }
+
+    .search-box:focus {
+        border-color: #2ecc71;
+        box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+    }
+</style>
+
+<div class="disease-hero text-center animate__animated animate__fadeIn">
+    <h1 class="display-4 fw-bold text-dark"><i class="fas fa-virus-slash me-3"></i>Disease Encyclopedia</h1>
+    <p class="lead text-dark opacity-75">Detailed database of crop infections and AI-verified treatments.</p>
+</div>
+
+<main class="container">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control search-box" placeholder="Search for a disease (e.g. Potato Blight)...">
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for disease in diseases %}
+            <div class="col-md-4 col-sm-6 animate__animated animate__zoomIn">
+                <div class="disease-card shadow-sm">
+                    <div class="position-relative overflow-hidden">
+                        <img src="{% if disease.image %}{{ disease.image.url }}{% else %}{% static 'images/disease_placeholder.jpg' %}{% endif %}" 
+                             class="disease-img" alt="{{ disease.name }}">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-danger rounded-pill px-3">Infection</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-2">{{ disease.name }}</h4>
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-seedling me-1"></i> Affects: <strong>{{ disease.crop.name }}</strong>
+                        </p>
+                        
+                        <p class="card-text text-secondary mb-4" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ disease.symptoms }}
+                        </p>
+
+                        <div class="d-grid">
+                            <button class="btn btn-outline-success rounded-pill fw-bold" data-bs-toggle="modal" data-bs-target="#diseaseModal{{ disease.id }}">
+                                View Treatment <i class="fas fa-chevron-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="diseaseModal{{ disease.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-4 border-0 shadow">
+                        <div class="modal-header bg-success text-white rounded-top-4">
+                            <h5 class="modal-title fw-bold">{{ disease.name }} Treatment</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-4">
+                            <h6 class="fw-bold text-primary"><i class="fas fa-flask me-2"></i>Scientific Method</h6>
+                            <p class="bg-light p-3 rounded mb-4">{{ disease.scientific_treatment }}</p>
+
+                            <h6 class="fw-bold text-success"><i class="fas fa-leaf me-2"></i>Organic Method</h6>
+                            <p class="bg-light p-3 rounded">{{ disease.organic_treatment }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <p class="lead">No diseases found in  library.</p>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

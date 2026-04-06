@@ -1,0 +1,125 @@
+{% extends 'farmapp/base.html' %}
+{% load static %}
+
+{% block title %}AgriShield | Organic Revolution{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. GREEN ECO-HEADER */
+    .organic-header {
+        background: linear-gradient(135deg, #1b3022 0%, #2ecc71 100%);
+        border-radius: 30px;
+        color: white;
+        padding: 60px 20px;
+        margin-bottom: 50px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* 2. RECIPE CARDS (Glassmorphism) */
+    .recipe-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 25px;
+        transition: all 0.4s ease;
+        border-top: 6px solid #2ecc71;
+    }
+
+    .recipe-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(46, 204, 113, 0.2) !important;
+    }
+
+    .recipe-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+        color: #27ae60;
+    }
+
+    /* 3. SECTION STYLING */
+    .practice-img {
+        border-radius: 30px;
+        box-shadow: 15px 15px 0px rgba(46, 204, 113, 0.1);
+        transition: 0.3s;
+    }
+
+    .practice-img:hover {
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="organic-header text-center animate__animated animate__fadeIn">
+    <h1 class="display-4 fw-bold"><i class="fas fa-seedling me-2"></i>Organic Solutions</h1>
+    <p class="lead opacity-75">Sustainable, chemical-free methods to protect your harvest and soil.</p>
+</div>
+
+<main class="container">
+    <div class="row align-items-center mb-5 pb-5 animate__animated animate__fadeInUp">
+        <div class="col-md-6">
+            <div class="badge bg-success mb-2 px-3 py-2 rounded-pill">Foundation</div>
+            <h2 class="fw-bold text-success mb-4">Building Healthy Soil</h2>
+            <p class="text-muted fs-5">Organic farming starts beneath the surface. Healthy soil is a living ecosystem that protects your plants naturally.</p>
+            <div class="d-flex mb-3">
+                <div class="me-3 text-success"><i class="fas fa-check-double fa-lg"></i></div>
+                <div><strong>Composting:</strong> Turning waste into "Black Gold" nutrients.</div>
+            </div>
+            <div class="d-flex mb-3">
+                <div class="me-3 text-success"><i class="fas fa-check-double fa-lg"></i></div>
+                <div><strong>Crop Rotation:</strong> Breaking pest cycles naturally by changing crops.</div>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{% static 'images/soil_health.png' %}" alt="Soil Health" class="img-fluid practice-img">
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-5 pb-5 animate__animated animate__fadeInUp">
+        <div class="col-md-6 order-md-2 ps-lg-5">
+            <div class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill">Smart Defense</div>
+            <h2 class="fw-bold text-dark mb-4">Integrated Pest Management</h2>
+            <p class="text-muted fs-5">Don't kill the "Good Bugs." IPM uses nature to fight nature, reducing the need for toxic sprays.</p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-bug text-warning me-2"></i><strong>Biological Control:</strong> Let ladybugs eat the aphids.</li>
+                <li class="mb-2"><i class="fas fa-bullseye text-warning me-2"></i><strong>Trap Cropping:</strong> Lure pests away from your main profit.</li>
+            </ul>
+        </div>
+        <div class="col-md-6 order-md-1 text-center">
+            <img src="{% static 'images/ipm.png' %}" alt="IPM" class="img-fluid practice-img">
+        </div>
+    </div>
+
+    <h2 class="text-center fw-bold mb-5 mt-5">Natural Treatment Lab</h2>
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="recipe-card card h-100 p-4 shadow-sm">
+                <i class="fas fa-spray-can recipe-icon"></i>
+                <h4 class="fw-bold">Neem Oil Spray</h4>
+                <p class="text-muted small">Best for: Aphids & Mites</p>
+                <hr>
+                <p class="small"><strong>Recipe:</strong> 5ml cold-pressed Neem oil + 2ml liquid soap + 1L water. Apply every 7 days.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="recipe-card card h-100 p-4 shadow-sm">
+                <i class="fas fa-mortar-pestle recipe-icon"></i>
+                <h4 class="fw-bold">Garlic Repellent</h4>
+                <p class="text-muted small">Best for: Natural Pest Deterrent</p>
+                <hr>
+                <p class="small"><strong>Recipe:</strong> Blend 1 bulb garlic with 1L water. Sit overnight, strain, dilute 1:10.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="recipe-card card h-100 p-4 shadow-sm">
+                <i class="fas fa-wind recipe-icon"></i>
+                <h4 class="fw-bold">Soda Fungicide</h4>
+                <p class="text-muted small">Best for: Mildew & Spots</p>
+                <hr>
+                <p class="small"><strong>Recipe:</strong> 1 tbsp baking soda + 1 tsp veg oil + 1 gallon water. Spray on leaves.</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

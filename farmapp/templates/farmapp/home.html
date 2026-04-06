@@ -1,0 +1,206 @@
+{% extends 'farmapp/base.html' %}
+{% load static %}
+
+{% block title %}AgriShield | AI Powered Agriculture{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. 3D HERO SECTION */
+    .hero-section {
+        background: linear-gradient(135deg, #1b3022 0%, #2ecc71 100%);
+        border-radius: 30px;
+        color: white;
+        padding: 80px 40px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .floating-leaf {
+        position: absolute;
+        right: 10%;
+        top: 20%;
+        font-size: 5rem;
+        opacity: 0.2;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    /* 2. POWER QUOTE BOX */
+    .mission-quote-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-left: 8px solid var(--primary-green);
+        border-radius: 25px;
+        padding: 45px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .mission-quote-card:hover {
+        transform: scale(1.01);
+    }
+
+    /* 3. IMPACT STAT BOXES */
+    .stat-box {
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border-radius: 20px !important;
+        background: white;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .stat-box:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        background-color: #ffffff !important;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 800;
+        display: block;
+        line-height: 1.2;
+    }
+
+    /* 4. FEATURE CARDS */
+    .feature-card {
+        background: white;
+        border: none;
+        border-radius: 25px;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+        transform-style: preserve-3d;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-15px) rotateX(8deg);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        background: #e8f5e9;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #2ecc71;
+        font-size: 1.8rem;
+        transition: 0.3s;
+    }
+
+    .feature-card:hover .icon-circle {
+        background: var(--primary-green);
+        color: white;
+        transform: translateZ(20px);
+    }
+</style>
+
+<div class="hero-section mb-5 animate__animated animate__zoomIn">
+    <i class="fas fa-leaf floating-leaf"></i>
+    <div class="row align-items-center">
+        <div class="col-lg-7 text-center text-lg-start">
+            <h1 class="display-3 fw-bold mb-3">Smart Shield for <br><span class="text-warning">Indian Farmers</span></h1>
+            <p class="lead mb-4 opacity-75">
+                Detect crop diseases instantly with trained AI models. 
+                Save your harvest with scientific and organic remedies.
+            </p>
+            <div class="d-flex justify-content-center justify-content-lg-start gap-3">
+                <a href="{% url 'upload' %}" class="btn btn-light btn-lg px-5 fw-bold rounded-pill text-success shadow">
+                    Start Scanning <i class="fas fa-bolt ms-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+            <img src="{% static 'images/homeimage.png' %}" class="img-fluid rounded-4 border border-5 border-white shadow-lg animate__animated animate__fadeInRight" alt="Farmer Tech">
+        </div>
+    </div>
+</div>
+
+<div class="row my-5 py-5 align-items-center">
+    <div class="col-md-7 animate__animated animate__fadeInLeft">
+        <div class="mission-quote-card">
+            <i class="fas fa-quote-left text-success mb-3 fa-2x opacity-25"></i>
+            <h2 class="display-6 fw-bold text-dark mb-3">Protecting Dreams, <br><span class="text-success">One Leaf at a Time.</span></h2>
+            <p class="fs-4 text-secondary mb-4" style="line-height: 1.5; font-weight: 400;">
+                "We don’t just detect diseases; <strong>we protect livelihoods.</strong> AgriShield turns complex AI into a simple shield, ensuring every seed sown becomes a harvest won."
+            </p>
+            <div class="d-flex align-items-center">
+                <div class="bg-success rounded-circle me-3" style="width: 45px; height: 45px; display:flex; align-items:center; justify-content:center;">
+                    <i class="fas fa-shield-alt text-white"></i>
+                </div>
+                <span class="fw-bold text-uppercase tracking-wider small text-muted">The AgriShield Mission | Innovation 2026</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-5 mt-5 mt-md-0 animate__animated animate__fadeInRight">
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="p-4 stat-box shadow-sm border-top border-4 border-success text-center h-100">
+                    <span class="stat-number text-dark">₹50,000Cr</span>
+                    <small class="text-muted fw-bold">Annual National Loss</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-4 stat-box shadow-sm border-top border-4 border-primary text-center h-100">
+                    <span class="stat-number text-dark">60%</span>
+                    <small class="text-muted fw-bold">Income Saved per Farmer</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-4 stat-box shadow-sm border-top border-4 border-warning text-center h-100">
+                    <span class="stat-number text-dark">24 Hours</span>
+                    <small class="text-muted fw-bold">Crisis Spread Time</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-4 stat-box shadow-sm border-top border-4 border-info text-center h-100">
+                    <span class="stat-number text-dark">1 Click</span>
+                    <small class="text-muted fw-bold">Expert Accessibility</small>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 p-3 bg-light rounded-3 border-start border-4 border-danger">
+            <p class="mb-0 small text-dark"><strong>Critical Fact:</strong> Over 35% of Indian crop yield is lost to preventable diseases. We bridge the gap between AI and the soil.</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="text-center fw-bold mb-5 mt-5">Intelligent Workflow</h2>
+<div class="row g-4 text-center mb-5">
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+        <div class="feature-card p-5 h-100 shadow-sm">
+            <div class="icon-circle">
+                <i class="fas fa-camera-retro"></i>
+            </div>
+            <h4 class="fw-bold">1. Capture</h4>
+            <p class="text-muted">Take a clear photo of the infected leaf using any smartphone camera.</p>
+        </div>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+        <div class="feature-card p-5 h-100 shadow-sm">
+            <div class="icon-circle">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <h4 class="fw-bold">2. Analyze</h4>
+            <p class="text-muted">Our Neural Network analyzes the image patterns on high-speed AWS clusters.</p>
+        </div>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+        <div class="feature-card p-5 h-100 shadow-sm">
+            <div class="icon-circle">
+                <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h4 class="fw-bold">3. Heal</h4>
+            <p class="text-muted">Receive scientific and organic remedies to save your crop immediately.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

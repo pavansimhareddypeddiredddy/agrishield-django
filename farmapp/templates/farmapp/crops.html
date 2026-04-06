@@ -1,0 +1,153 @@
+{% extends 'farmapp/base.html' %}
+{% load static %}
+
+{% block title %}AgriShield | Crop Catalog{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. SECTION HEADERS */
+    .catalog-header {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{% static "images/farm-bg.jpg" %}') center/cover;
+        border-radius: 20px;
+        color: white;
+        padding: 60px 20px;
+        margin-bottom: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* 2. CROP CARD STYLING */
+    .crop-row {
+        transition: all 0.5s ease;
+        padding: 30px;
+        border-radius: 25px;
+        background: white;
+        margin-bottom: 40px;
+    }
+
+    .crop-row:hover {
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        transform: translateY(-5px);
+    }
+
+    /* 3. 3D IMAGE STYLE */
+    .crop-img-container {
+        perspective: 1000px;
+    }
+
+    .crop-image-placeholder {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 10px 10px 25px rgba(0,0,0,0.1);
+        transition: transform 0.5s ease;
+    }
+
+    .crop-row:hover .crop-image-placeholder {
+        transform: rotateY(-5deg) rotateX(5deg);
+    }
+
+    /* 4. SEASON BADGES */
+    .badge-season {
+        background: #fff3cd;
+        color: #856404;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid #ffeeba;
+    }
+
+    .disease-pill {
+        transition: all 0.3s ease;
+        cursor: help;
+    }
+
+    .disease-pill:hover {
+        background-color: #dc3545 !important;
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="catalog-header text-center animate__animated animate__fadeIn">
+    <h1 class="display-4 fw-bold">Major Indian Crops</h1>
+    <p class="lead opacity-75">Smart insights into seasons, requirements, and health monitoring.</p>
+</div>
+
+<main class="container">
+    {% for crop in crops %}
+        <div class="crop-row row align-items-center animate__animated {% if forloop.counter|divisibleby:2 %}animate__fadeInRight{% else %}animate__fadeInLeft{% endif %} shadow-sm">
+            
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="col-md-7 order-md-1">
+                    <div class="d-flex align-items-center mb-3">
+                        <h2 class="fw-bold text-success mb-0">{{ crop.name }}</h2>
+                        <span class="badge-season ms-3">{{ crop.season }}</span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-uppercase text-muted fw-bold small"><i class="fas fa-info-circle me-2"></i>Growth Requirements</h6>
+                        <p class="text-secondary">{{ crop.requirements|safe|linebreaksbr }}</p> 
+                    </div>
+
+                    <h6 class="text-uppercase text-muted fw-bold small mb-3"><i class="fas fa-virus me-2"></i>Common Vulnerabilities</h6>
+                    <div>
+                        {% if crop.diseases.all %}
+                            {% for disease in crop.diseases.all %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 disease-pill me-2 mb-2 p-2 px-3 rounded-pill">
+                                    {{ disease.name }}
+                                </span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted italic">No diseases recorded.</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-5 order-md-2 text-center crop-img-container">
+                    <img src="{% if crop.image %}{{ crop.image.url }}{% else %}{% static 'images/crop_placeholder.jpg' %}{% endif %}" 
+                         class="crop-image-placeholder shadow" alt="{{ crop.name }}">
+                </div>
+
+            {% else %}
+                <div class="col-md-5 order-md-1 text-center crop-img-container">
+                    <img src="{% if crop.image %}{{ crop.image.url }}{% else %}{% static 'images/crop_placeholder.jpg' %}{% endif %}" 
+                         class="crop-image-placeholder shadow" alt="{{ crop.name }}">
+                </div>
+
+                <div class="col-md-7 order-md-2 ps-md-5">
+                    <div class="d-flex align-items-center mb-3">
+                        <h2 class="fw-bold text-success mb-0">{{ crop.name }}</h2>
+                        <span class="badge-season ms-3">{{ crop.season }}</span>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="text-uppercase text-muted fw-bold small"><i class="fas fa-info-circle me-2"></i>Growth Requirements</h6>
+                        <p class="text-secondary">{{ crop.requirements|safe|linebreaksbr }}</p> 
+                    </div>
+
+                    <h6 class="text-uppercase text-muted fw-bold small mb-3"><i class="fas fa-virus me-2"></i>Common Vulnerabilities</h6>
+                    <div>
+                        {% if crop.diseases.all %}
+                            {% for disease in crop.diseases.all %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 disease-pill me-2 mb-2 p-2 px-3 rounded-pill">
+                                    {{ disease.name }}
+                                </span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted italic">No diseases recorded.</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="text-center py-5">
+            <i class="fas fa-seedling fa-4x text-muted mb-3"></i>
+            <h3>The Catalog is Empty</h3>
+            <p class="text-muted">Populate your database via the AgriShield Admin Panel.</p>
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}
