@@ -5,7 +5,7 @@
 
 {% block content %}
 <style>
-    /* 1. REPORT HEADER ANIMATION */
+    /* 1. REPORT HEADER & CARD STYLE */
     .report-card {
         border-radius: 25px;
         overflow: hidden;
@@ -14,7 +14,7 @@
         backdrop-filter: blur(10px);
     }
 
-    /* 2. PROGRESS BAR ANIMATION */
+    /* 2. PROGRESS BAR STYLE */
     .progress {
         height: 35px;
         border-radius: 50px;
@@ -25,14 +25,15 @@
     .progress-bar {
         font-weight: bold;
         font-size: 1.1rem;
-        transition: width 2s ease-in-out; /* The bar will grow slowly */
+        transition: width 2s ease-in-out; 
         background: linear-gradient(90deg, #2ecc71, #27ae60);
     }
 
-    /* 3. TREATMENT TABS STYLE */
+    /* 3. TREATMENT BOXES */
     .solution-box {
         border-radius: 15px;
         transition: transform 0.3s ease;
+        min-height: 150px;
     }
 
     .solution-box:hover {
@@ -49,6 +50,7 @@
     .result-img {
         transition: transform 0.5s ease;
         cursor: zoom-in;
+        object-fit: cover;
     }
     .result-img:hover {
         transform: scale(1.05);
@@ -82,17 +84,16 @@
                 <div class="card-header border-0 bg-white pt-4 px-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="fw-bold mb-0">Analysis Results</h3>
-                        <span class="badge bg-success-soft text-success rounded-pill px-3 py-2" style="background: #e8f5e9;">
+                        <span class="badge rounded-pill px-3 py-2" style="background: #e8f5e9; color: #2e7d32;">
                             <i class="fas fa-shield-alt me-1"></i> Verified Diagnosis
                         </span>
                     </div>
                 </div>
 
                 <div class="card-body px-4">
-                    {% if upload.predicted_disease %}
-                        <h2 class="display-6 fw-bold text-danger mb-1">{{ upload.predicted_disease.name }}</h2>
+                    {% if upload.predicted_disease_name %}
+                        <h2 class="display-6 fw-bold text-danger mb-1">{{ upload.predicted_disease_name }}</h2>
                         <div class="mb-4">
-                            <span class="badge bg-secondary rounded-pill me-2">Crop: {{ upload.predicted_disease.crop.name }}</span>
                             <span class="badge bg-info rounded-pill">Status: Infection Detected</span>
                         </div>
 
@@ -102,26 +103,33 @@
                                  role="progressbar" 
                                  style="width: 0%" 
                                  id="confidenceBar">
-                                 {{ upload.confidence_score|default:"98.5" }}%
+                                 {{ upload.confidence_score }}%
                             </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <h5 class="fw-bold"><i class="fas fa-notes-medical text-warning me-2"></i>Observation Symptoms</h5>
-                            <p class="text-secondary p-3 bg-light rounded-3">{{ upload.predicted_disease.symptoms }}</p>
                         </div>
 
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="solution-box p-3 bg-primary bg-opacity-10 border-start border-4 border-primary h-100">
-                                    <h6 class="fw-bold text-primary"><i class="fas fa-flask me-2"></i>Scientific Cure</h6>
-                                    <p class="small text-dark mb-0">{{ upload.predicted_disease.scientific_treatment }}</p>
+                                    <h6 class="fw-bold text-primary"><i class="fas fa-flask me-2"></i>English Cure</h6>
+                                    <p class="small text-dark mb-0">
+                                        {% if solutions.english %}
+                                            {{ solutions.english }}
+                                        {% else %}
+                                            Apply broad-spectrum bactericide as per local regulations.
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="solution-box p-3 bg-success bg-opacity-10 border-start border-4 border-success h-100">
                                     <h6 class="fw-bold text-success"><i class="fas fa-leaf me-2"></i>Organic Remedy</h6>
-                                    <p class="small text-dark mb-0">{{ upload.predicted_disease.organic_treatment }}</p>
+                                    <p class="small text-dark mb-0">
+                                        {% if solutions.organic %}
+                                            {{ solutions.organic }}
+                                        {% else %}
+                                            Ensure proper field drainage and use balanced nitrogen fertilization.
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -149,10 +157,10 @@
 </div>
 
 <script>
-    // This script makes the progress bar grow from 0 to actual value when page loads
     window.onload = function() {
         const bar = document.getElementById('confidenceBar');
-        const score = "{{ upload.confidence_score|default:'98.5' }}";
+        const score = "{{ upload.confidence_score }}";
+        // Delay makes the bar "grow" visually for the teacher
         setTimeout(() => {
             bar.style.width = score + "%";
         }, 500);
