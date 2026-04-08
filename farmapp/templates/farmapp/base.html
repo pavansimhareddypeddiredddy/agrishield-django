@@ -145,25 +145,54 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'crops' %}">Crops</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'diseases' %}">Diseases</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'organic' %}">Organic</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-scan ms-lg-3 animate__animated animate__pulse animate__infinite" href="{% url 'upload' %}">
-                            <i class="fas fa-camera-retro me-2"></i>Detect Now
-                        </a>
-                    </li>
-                </ul>
+               <ul class="navbar-nav ms-auto align-items-center">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">
+            <i class="fas fa-home me-1"></i> Home
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'crops' %}">
+            <i class="fas fa-seedling me-1"></i> Crops
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'diseases' %}">
+            <i class="fas fa-bug me-1"></i> Diseases
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'organic' %}">
+            <i class="fas fa-leaf me-1"></i> Organic
+        </a>
+    </li>
+
+    <!-- 🔥 NEW PROFILE TAB -->
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile' %}">
+            <i class="fas fa-user-circle me-1"></i> Profile
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-danger" href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt me-1"></i> Logout
+        </a>
+    </li>
+    {% endif %}
+
+    <li class="nav-item">
+        <a class="btn btn-scan ms-lg-3 animate__animated animate__pulse animate__infinite" href="{% url 'upload' %}">
+            <i class="fas fa-camera-retro me-2"></i>Detect Now
+        </a>
+    </li>
+
+</ul>
             </div>
         </div>
     </nav>

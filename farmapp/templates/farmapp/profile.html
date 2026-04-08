@@ -1,0 +1,129 @@
+{% extends 'farmapp/base.html' %}
+
+{% block content %}
+
+<style>
+.profile-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c2f, #2ecc71);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.profile-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 900px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.profile-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+}
+
+.info-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.info-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.label {
+    font-weight: 600;
+    color: #2ecc71;
+    font-size: 14px;
+}
+
+.value {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+</style>
+
+<div class="profile-wrapper">
+
+    <div class="profile-card">
+
+        <div class="profile-title">
+            👨‍🌾 Farmer Profile
+        </div>
+
+        <div class="profile-grid">
+
+            <!-- USER INFO -->
+            <div class="info-box">
+                <div class="label">Username</div>
+                <div class="value">{{ user.username }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">Email</div>
+                <div class="value">{{ user.email }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">First Name</div>
+                <div class="value">{{ user.first_name }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">Last Name</div>
+                <div class="value">{{ user.last_name }}</div>
+            </div>
+
+            {% if profile %}
+
+            <div class="info-box">
+                <div class="label">Age</div>
+                <div class="value">{{ profile.age }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">Gender</div>
+                <div class="value">{{ profile.gender }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">State</div>
+                <div class="value">{{ profile.state }}</div>
+            </div>
+
+            <div class="info-box">
+                <div class="label">District</div>
+                <div class="value">{{ profile.district }}</div>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

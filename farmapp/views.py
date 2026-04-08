@@ -1,7 +1,11 @@
 import os
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Upload, Disease, Crop 
-from .forms import UploadForm
+from .forms import UploadForm, SignupForm
+
+# ✅ NEW IMPORTS FOR LOGIN
+from django.contrib.auth import authenticate, login
+
 
 # --- 1. Core Page Views ---
 
@@ -20,7 +24,52 @@ def organic(request):
     return render(request, 'farmapp/organic.html')
 
 
-# --- 2. Detection Logic Views ---
+# --- 🔐 2. AUTHENTICATION ---
+
+from .models import FarmerProfile
+
+def signup_view(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            # 🔥 CREATE FARMER PROFILE
+            FarmerProfile.objects.create(
+                user=user,
+                age=form.cleaned_data.get("age"),
+                gender=form.cleaned_data.get("gender"),
+                state=form.cleaned_data.get("state"),
+                district=form.cleaned_data.get("district")
+            )
+
+            return redirect("login")
+    else:
+        form = SignupForm()
+
+    return render(request, "farmapp/signup.html", {"form": form})
+
+
+# 🔥 NEW LOGIN VIEW (ADDED)
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("home")  # go to home after login
+        else:
+            return render(request, "farmapp/login.html", {
+                "error": "Invalid username or password"
+            })
+
+    return render(request, "farmapp/login.html")
+
+
+# --- 3. Detection Logic Views ---
 
 def upload_image(request):
     if request.method == 'POST':
@@ -28,21 +77,14 @@ def upload_image(request):
         if form.is_valid():
             upload_instance = form.save(commit=False)
             
-            # --- AGRI-SHIELD LOGIC ---
-            # For your B.Tech Demo: We pick the first disease available in your Admin panel
-            # to simulate a successful detection. 
-            # Later, your AI model code will go here.
-            
-            predicted_disease_obj = Disease.objects.first() # Grabs the first disease you added
+            predicted_disease_obj = Disease.objects.first()
             
             if predicted_disease_obj:
                 upload_instance.predicted_disease = predicted_disease_obj
-                upload_instance.confidence_score = 99.2 # High confidence for the demo!
+                upload_instance.confidence_score = 99.2
                 upload_instance.save()
-                # Use 'upload' (the name in your URL pattern) instead of 'upload_result'
                 return redirect('upload_result', pk=upload_instance.pk) 
             else:
-                # If you haven't added any diseases in Admin yet
                 return render(request, 'farmapp/upload.html', {
                     'form': form, 
                     'error': "Please add at least one Disease in the Admin Panel first!"
@@ -54,10 +96,7 @@ def upload_image(request):
 
 
 def upload_result(request, pk):
-    """Fetches the specific upload and its diagnosis."""
     upload = get_object_or_404(Upload, pk=pk)
-    
-    # We get the disease object from the upload record
     disease = upload.predicted_disease
     
     context = {
@@ -66,3 +105,28 @@ def upload_result(request, pk):
     }
     
     return render(request, 'farmapp/result.html', context)
+
+from django.contrib.auth.decorators import login_required
+from .models import FarmerProfile
+
+@login_required
+def profile_view(request):
+    user = request.user
+    
+    try:
+        profile = FarmerProfile.objects.get(user=user)
+    except FarmerProfile.DoesNotExist:
+        profile = None
+
+    context = {
+        'user': user,
+        'profile': profile
+    }
+
+    return render(request, 'farmapp/profile.html', context)
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

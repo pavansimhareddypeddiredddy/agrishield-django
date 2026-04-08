@@ -1,0 +1,398 @@
+{
+    "Rice_Bacterial_Leaf_Blight": {
+        "organic": [
+            "Use balanced nitrogen fertilization",
+            "Ensure proper field drainage",
+            "Remove alternate weed hosts",
+            "Seed treatment with hot water (52\u00b0C for 10 mins)"
+        ],
+        "scientific": [
+            "Spray Copper Hydroxide",
+            "Apply Streptomycin + Tetracycline combination",
+            "Use stable bleaching powder in irrigation"
+        ]
+    },
+    "Rice_Brown_Spot": {
+        "organic": [
+            "Improve soil fertility (Potassium)",
+            "Use certified disease-free seeds",
+            "Apply neem seed kernel extract"
+        ],
+        "scientific": [
+            "Spray Edifenphos or Mancozeb",
+            "Seed treatment with Captan or Thiram",
+            "Apply Propiconazole"
+        ]
+    },
+    "Rice_Healthy": {
+        "organic": [
+            "Maintain regular crop monitoring",
+            "Continue organic composting"
+        ],
+        "scientific": [
+            "Follow standard preventive agronomic practices"
+        ]
+    },
+    "Rice_Leaf_Blast": {
+        "organic": [
+            "Avoid excessive nitrogen",
+            "Burn infected crop residues",
+            "Maintain standing water in fields"
+        ],
+        "scientific": [
+            "Spray Tricyclazole",
+            "Apply Carbendazim",
+            "Use Azoxystrobin"
+        ]
+    },
+    "Rice_Leaf_scald": {
+        "organic": [
+            "Apply balanced fertilizer",
+            "Space plants properly for airflow"
+        ],
+        "scientific": [
+            "Spray Benomyl or Carbendazim",
+            "Apply copper-based fungicides"
+        ]
+    },
+    "Rice_Sheath_Blight": {
+        "organic": [
+            "Remove weeds from levees",
+            "Reduce planting density",
+            "Apply Trichoderma harzianum"
+        ],
+        "scientific": [
+            "Apply Hexaconazole",
+            "Spray Validamycin",
+            "Use Trifloxystrobin + Tebuconazole"
+        ]
+    },
+    "Tomato___Bacterial_spot": {
+        "organic": [
+            "Prune lower leaves to reduce splash",
+            "Apply copper-based organic sprays",
+            "Crop rotation (2-3 years)"
+        ],
+        "scientific": [
+            "Spray Copper Sulfate with Mancozeb",
+            "Apply Streptomycin sulfate"
+        ]
+    },
+    "Tomato___Early_blight": {
+        "organic": [
+            "Mulch around the base",
+            "Remove bottom 12 inches of leaves",
+            "Spray compost tea"
+        ],
+        "scientific": [
+            "Apply Chlorothalonil",
+            "Spray Pyraclostrobin",
+            "Use Mancozeb"
+        ]
+    },
+    "Tomato___Late_blight": {
+        "organic": [
+            "Destroy all infected plant parts",
+            "Improve air circulation",
+            "Apply Bacillus subtilis"
+        ],
+        "scientific": [
+            "Spray Copper-based fungicides",
+            "Apply Fenamidone + Mancozeb",
+            "Use Cyazofamid"
+        ]
+    },
+    "Tomato___Leaf_Mold": {
+        "organic": [
+            "Reduce humidity in greenhouses",
+            "Increase plant spacing",
+            "Sterilize garden tools"
+        ],
+        "scientific": [
+            "Spray Difenoconazole",
+            "Apply Chlorothalonil",
+            "Use Zineb"
+        ]
+    },
+    "Tomato___Septoria_leaf_spot": {
+        "organic": [
+            "Remove infected leaves immediately",
+            "Avoid overhead watering",
+            "Control horsenettle weeds"
+        ],
+        "scientific": [
+            "Apply Mancozeb",
+            "Spray Chlorothalonil",
+            "Use Copper Hydroxide"
+        ]
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+        "organic": [
+            "Release predatory mites",
+            "Spray forceful water stream",
+            "Apply Insecticidal soap or Neem oil"
+        ],
+        "scientific": [
+            "Apply Abamectin",
+            "Spray Spiromesifen",
+            "Use Fenpyroximate"
+        ]
+    },
+    "Tomato___Target_Spot": {
+        "organic": [
+            "Remove old crop debris",
+            "Maintain dry foliage"
+        ],
+        "scientific": [
+            "Apply Azoxystrobin",
+            "Spray Boscalid",
+            "Use Chlorothalonil"
+        ]
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+        "organic": [
+            "Use yellow sticky traps for Whiteflies",
+            "Cover plants with fine mesh",
+            "Reflective mulches"
+        ],
+        "scientific": [
+            "Apply Imidacloprid to control vectors",
+            "Use Acetamiprid"
+        ]
+    },
+    "Tomato___Tomato_mosaic_virus": {
+        "organic": [
+            "Wash hands with milk/soap before handling",
+            "Remove and burn infected plants"
+        ],
+        "scientific": [
+            "No chemical cure; use virus-resistant seeds",
+            "Soil solarization"
+        ]
+    },
+    "Tomato___healthy": {
+        "organic": [
+            "Continue routine mulching",
+            "Regular scouting"
+        ],
+        "scientific": [
+            "Standard maintenance"
+        ]
+    },
+    "Wheat___Brown_Rust": {
+        "organic": [
+            "Early sowing to avoid heat",
+            "Use resistant cultivars",
+            "Apply sulphur dust"
+        ],
+        "scientific": [
+            "Spray Propiconazole",
+            "Apply Tebuconazole",
+            "Use Triadimefon"
+        ]
+    },
+    "Wheat___Healthy": {
+        "organic": [
+            "Ensure proper seed depth"
+        ],
+        "scientific": [
+            "Standard crop management"
+        ]
+    },
+    "Wheat___Yellow_Rust": {
+        "organic": [
+            "Plant resistant varieties",
+            "Eliminate 'green bridge' weeds"
+        ],
+        "scientific": [
+            "Spray Propiconazole",
+            "Apply Azoxystrobin",
+            "Tebuconazole treatment"
+        ]
+    },
+    "corn_Blight": {
+        "organic": [
+            "Crop rotation with legumes",
+            "Deep plowing of residue"
+        ],
+        "scientific": [
+            "Spray Mancozeb",
+            "Apply Pyraclostrobin",
+            "Use Propiconazole"
+        ]
+    },
+    "corn_Common_Rust": {
+        "organic": [
+            "Plant early in the season",
+            "Apply neem-based spray"
+        ],
+        "scientific": [
+            "Apply Pyraclostrobin",
+            "Spray Azoxystrobin",
+            "Use Tebuconazole"
+        ]
+    },
+    "corn_Gray_Leaf_Spot": {
+        "organic": [
+            "Conventional tillage to bury debris",
+            "One-year crop rotation"
+        ],
+        "scientific": [
+            "Spray Benzovindiflupyr",
+            "Apply Azoxystrobin",
+            "Use Propiconazole"
+        ]
+    },
+    "corn_Healthy": {
+        "organic": [
+            "Maintain soil health"
+        ],
+        "scientific": [
+            "Routine monitoring"
+        ]
+    },
+    "non_leaf": {
+        "organic": [
+            "Not a plant leaf; ignore treatment"
+        ],
+        "scientific": [
+            "N/A"
+        ]
+    },
+    "potato_Bacteria": {
+        "organic": [
+            "Use certified seed tubers",
+            "Crop rotation",
+            "Avoid mechanical injury during harvest"
+        ],
+        "scientific": [
+            "Copper Oxychloride spray",
+            "Soil treatment with bleaching powder"
+        ]
+    },
+    "potato_Healthy": {
+        "organic": [
+            "Maintain hilling"
+        ],
+        "scientific": [
+            "Standard preventive care"
+        ]
+    },
+    "potato_Late_Blight": {
+        "organic": [
+            "Remove infected tubers",
+            "Spray copper fungicides",
+            "Apply Bacillus subtilis"
+        ],
+        "scientific": [
+            "Spray Metalaxyl",
+            "Apply Cymoxanil",
+            "Use Mancozeb"
+        ]
+    },
+    "potato_Nematode": {
+        "organic": [
+            "Plant marigolds (Tagetes)",
+            "Solarize soil",
+            "Add high organic matter"
+        ],
+        "scientific": [
+            "Apply Fluopyram",
+            "Use Ethoprophos",
+            "Fumigate soil"
+        ]
+    },
+    "potato_Pest": {
+        "organic": [
+            "Apply Neem oil",
+            "Use Bacillus thuringiensis (Bt)",
+            "Hand-pick larger pests"
+        ],
+        "scientific": [
+            "Spray Chlorpyrifos",
+            "Apply Cypermethrin",
+            "Use Imidacloprid"
+        ]
+    },
+    "potato_Phytopthora": {
+        "organic": [
+            "Improve field drainage",
+            "Use resistant cultivars"
+        ],
+        "scientific": [
+            "Apply Phosphonate fungicides",
+            "Spray Mefenoxam"
+        ]
+    },
+    "potato_Virus": {
+        "organic": [
+            "Control aphid populations",
+            "Roguing",
+            "Use virus-free tubers"
+        ],
+        "scientific": [
+            "Apply systemic insecticides for vectors",
+            "Mineral oil sprays"
+        ]
+    },
+    "sugarcane_BacterialBlights": {
+        "organic": [
+            "Hot water treatment of sets",
+            "Sterilize cutting knives"
+        ],
+        "scientific": [
+            "Spray Copper Hydroxide",
+            "Apply Streptomycin"
+        ]
+    },
+    "sugarcane_Healthy": {
+        "organic": [
+            "Standard cultivation"
+        ],
+        "scientific": [
+            "Standard maintenance"
+        ]
+    },
+    "sugarcane_Mosaic": {
+        "organic": [
+            "Rogue out infected clumps",
+            "Control weed hosts"
+        ],
+        "scientific": [
+            "Insecticide for aphid control",
+            "Use meristem culture plants"
+        ]
+    },
+    "sugarcane_RedRot": {
+        "organic": [
+            "Select healthy setts",
+            "Avoid ratoon crop",
+            "Burn trash after harvest"
+        ],
+        "scientific": [
+            "Sett treatment with Carbendazim",
+            "Apply Triadimefon"
+        ]
+    },
+    "sugarcane_Rust": {
+        "organic": [
+            "Avoid over-irrigation",
+            "Apply sulfur dust"
+        ],
+        "scientific": [
+            "Spray Pyraclostrobin",
+            "Apply Propiconazole",
+            "Use Mancozeb"
+        ]
+    },
+    "sugarcane_Yellow": {
+        "organic": [
+            "Use tissue-cultured planting material",
+            "Monitor aphid vectors"
+        ],
+        "scientific": [
+            "Spray Dimethoate for aphids",
+            "Apply Imidacloprid"
+        ]
+    }
+}
