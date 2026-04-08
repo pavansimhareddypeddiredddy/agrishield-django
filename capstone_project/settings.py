@@ -83,10 +83,17 @@ WSGI_APPLICATION = 'capstone_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+
+DB_PATH = BASE_DIR / 'data' / 'db.sqlite3'
+
+if not DB_PATH.exists():
+    DB_PATH = BASE_DIR / 'db.sqlite3'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR /'data'/'db.sqlite3',
+        'NAME': DB_PATH,
     }
 }
 
@@ -149,3 +156,7 @@ MEDIA_URL = '/media/'
 
 # The full filesystem path where uploaded files will be stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://54.210.119.245:30080",
+]
