@@ -31,10 +31,10 @@ from .models import FarmerProfile
 def signup_view(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
+
         if form.is_valid():
             user = form.save()
 
-            # 🔥 CREATE FARMER PROFILE
             FarmerProfile.objects.create(
                 user=user,
                 age=form.cleaned_data.get("age"),
@@ -44,6 +44,10 @@ def signup_view(request):
             )
 
             return redirect("login")
+
+        else:
+            print("FORM ERRORS:", form.errors)  # DEBUG
+
     else:
         form = SignupForm()
 

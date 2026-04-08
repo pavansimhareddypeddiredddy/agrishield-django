@@ -4,58 +4,43 @@
 <meta charset="UTF-8">
 <title>Signup | AgriShield</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 body {
-    height: 100vh;
-    background: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef") no-repeat center center/cover;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(0,80,40,0.7), rgba(0,120,60,0.7)),
+    url('https://images.unsplash.com/photo-1500382017468-9049fed747ef');
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
 }
 
-/* 🌿 Overlay */
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,80,40,0.4), rgba(0,120,60,0.3));
-}
-
-/* 🌟 FORM */
+/* CARD */
 .form-container {
-    position: relative;
-    width: 750px;
+    width: 800px;
+    background: rgba(0,0,0,0.55);
     padding: 40px;
-    border-radius: 25px;
-
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-
-    box-shadow: 0 25px 80px rgba(0,0,0,0.4);
-    color: #fff;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 /* TITLE */
-h2 {
+.form-container h2 {
     text-align: center;
+    color: white;
     margin-bottom: 25px;
-    font-size: 30px;
-    font-weight: 700;
 }
 
 /* GRID */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 18px;
 }
 
@@ -68,242 +53,195 @@ h2 {
     position: relative;
 }
 
-/* ICON */
-.input-group i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #555;
-}
-
-/* INPUT */
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 14px 14px 14px 38px;
-    border-radius: 10px;
+    height: 50px;
+    padding: 14px 14px 14px 42px;
+    border-radius: 12px;
     border: none;
     outline: none;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* ICON */
+.input-group i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2ecc71;
 }
 
 /* LABEL */
 .input-group label {
     position: absolute;
+    left: 42px;
     top: 50%;
-    left: 38px;
     transform: translateY(-50%);
-    color: #555;
-    font-size: 14px;
-    transition: 0.3s;
+    font-size: 13px;
+    color: #666;
+    transition: 0.25s;
+    pointer-events: none;
 }
 
 /* FLOAT */
 .input-group input:focus + label,
-.input-group input:valid + label,
+.input-group input:not(:placeholder-shown) + label,
 .input-group select:focus + label,
 .input-group select:valid + label {
     top: -8px;
-    left: 30px;
-    font-size: 12px;
-    background: #000;
+    left: 35px;
+    font-size: 11px;
+    background: rgba(0,0,0,0.7);
     color: #00ff99;
     padding: 2px 6px;
+    border-radius: 6px;
 }
 
 /* BUTTON */
 .btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 30px;
+    grid-column: span 2;
+    height: 50px;
+    border-radius: 25px;
     border: none;
-    font-weight: 700;
-    background: linear-gradient(45deg,#00c853,#76ff03);
-    color: #fff;
+    background: linear-gradient(90deg,#00c853,#64dd17);
+    color: white;
+    font-weight: bold;
     cursor: pointer;
 }
 
-.btn:hover {
-    transform: scale(1.05);
-}
-
-/* LOADING */
-.loader {
-    display: none;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.loader div {
-    width: 20px;
-    height: 20px;
-    background: #00ff99;
-    border-radius: 50%;
-    display: inline-block;
-    animation: bounce 0.6s infinite alternate;
-}
-
-.loader div:nth-child(2) { animation-delay: 0.2s; }
-.loader div:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-    to { transform: translateY(-10px); }
-}
-
-/* SUCCESS POPUP */
-.popup {
-    display: none;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #00c853;
+/* ERROR */
+.error-box {
+    background: #ff4d4d;
     color: white;
-    padding: 15px 20px;
-    border-radius: 10px;
-    font-weight: 600;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 13px;
 }
-
-/* LINK */
-.login-link {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.login-link a {
-    color: #aaffc3;
-    font-weight: 700;
-}
-
 </style>
-
-<!-- ICON LIBRARY -->
-<script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
 <div class="form-container">
-<h2>🌱 Create Farmer Account</h2>
+    <h2>🌱 Create Farmer Account</h2>
 
-<form method="POST" onsubmit="showLoader()">
-{% csrf_token %}
+    {% if form.errors %}
+    <div class="error-box">
+        {{ form.errors }}
+    </div>
+    {% endif %}
 
-<div class="form-grid">
+    <form method="POST">
+        {% csrf_token %}
 
-<div class="input-group full">
-<i>👤</i>
-<input type="text" name="username" required>
-<label>Username</label>
+        <div class="form-grid">
+
+            <div class="input-group full">
+                <input type="text" name="username" placeholder=" " required>
+                <label>Username</label>
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="input-group full">
+                <input type="email" name="email" placeholder=" " required>
+                <label>Email</label>
+                <i class="fa fa-envelope"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password1" placeholder=" " required>
+                <label>Password</label>
+                <i class="fa fa-lock"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password2" placeholder=" " required>
+                <label>Confirm Password</label>
+                <i class="fa fa-lock"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="first_name" placeholder=" " required>
+                <label>First Name</label>
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="last_name" placeholder=" " required>
+                <label>Last Name</label>
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="number" name="age" placeholder=" " required>
+                <label>Age</label>
+                <i class="fa fa-calendar"></i>
+            </div>
+
+            <div class="input-group">
+                <select name="gender" required>
+                    <option value="" disabled selected hidden></option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+                <label>Gender</label>
+                <i class="fa fa-venus-mars"></i>
+            </div>
+
+            <div class="input-group">
+                <select name="state" required>
+                    <option value="" disabled selected hidden></option>
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Goa</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Manipur</option>
+                    <option>Meghalaya</option>
+                    <option>Mizoram</option>
+                    <option>Nagaland</option>
+                    <option>Odisha</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Sikkim</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Tripura</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
+                </select>
+                <label>State</label>
+                <i class="fa fa-map"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="district" placeholder=" " required>
+                <label>District</label>
+                <i class="fa fa-location-dot"></i>
+            </div>
+
+            <button type="submit" class="btn">Signup</button>
+
+        </div>
+    </form>
+
 </div>
-
-<div class="input-group full">
-<i>📧</i>
-<input type="email" name="email" required>
-<label>Email</label>
-</div>
-
-<div class="input-group">
-<i>🔒</i>
-<input type="password" name="password1" required>
-<label>Password</label>
-</div>
-
-<div class="input-group">
-<i>🔒</i>
-<input type="password" name="password2" required>
-<label>Confirm Password</label>
-</div>
-
-<div class="input-group">
-<i>👤</i>
-<input type="text" name="first_name" required>
-<label>First Name</label>
-</div>
-
-<div class="input-group">
-<i>👤</i>
-<input type="text" name="last_name" required>
-<label>Last Name</label>
-</div>
-
-<div class="input-group">
-<i>🎂</i>
-<input type="number" name="age" required>
-<label>Age</label>
-</div>
-
-<div class="input-group">
-<i>⚧</i>
-<select name="gender" required>
-<option value="" disabled selected></option>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
-</select>
-<label>Gender</label>
-</div>
-
-<div class="input-group">
-<i>📍</i>
-<select name="state" required>
-<option value="" disabled selected></option>
-<option>Andhra Pradesh</option>
-<option>Telangana</option>
-<option>Karnataka</option>
-<option>Tamil Nadu</option>
-<option>Maharashtra</option>
-<option>Kerala</option>
-<option>Punjab</option>
-<option>Uttar Pradesh</option>
-<option>Gujarat</option>
-<option>Rajasthan</option>
-</select>
-<label>State</label>
-</div>
-
-<div class="input-group">
-<i>🏡</i>
-<input type="text" name="district" required>
-<label>District</label>
-</div>
-
-<div class="full">
-<button class="btn">Signup</button>
-</div>
-
-</div>
-
-</form>
-
-<!-- LOADER -->
-<div class="loader" id="loader">
-<div></div><div></div><div></div>
-</div>
-
-<div class="login-link">
-Already have account? <a href="{% url 'login' %}">Login</a>
-</div>
-
-</div>
-
-<!-- SUCCESS POPUP -->
-<div class="popup" id="popup">Signup Successful 🎉</div>
-
-<script>
-function showLoader() {
-    document.getElementById("loader").style.display = "block";
-}
-
-/* Simulate success popup (optional) */
-setTimeout(() => {
-    let popup = document.getElementById("popup");
-    if(popup) popup.style.display = "block";
-}, 2000);
-</script>
 
 </body>
 </html>
