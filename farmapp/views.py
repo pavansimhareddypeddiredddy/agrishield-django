@@ -6,6 +6,9 @@ from .forms import UploadForm, SignupForm
 # ✅ NEW IMPORTS FOR LOGIN
 from django.contrib.auth import authenticate, login
 
+# ✅ AI MODEL IMPORT
+from .ai_model_loader import predict_disease, solutions
+
 
 # --- 1. Core Page Views ---
 
@@ -46,7 +49,7 @@ def signup_view(request):
             return redirect("login")
 
         else:
-            print("FORM ERRORS:", form.errors)  # DEBUG
+            print("FORM ERRORS:", form.errors)
 
     else:
         form = SignupForm()
@@ -54,7 +57,6 @@ def signup_view(request):
     return render(request, "farmapp/signup.html", {"form": form})
 
 
-# 🔥 NEW LOGIN VIEW (ADDED)
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -64,7 +66,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("home")  # go to home after login
+            return redirect("home")
         else:
             return render(request, "farmapp/login.html", {
                 "error": "Invalid username or password"
@@ -73,45 +75,85 @@ def login_view(request):
     return render(request, "farmapp/login.html")
 
 
-# --- 3. Detection Logic Views ---
+# --- 🚀 3. AI Detection Logic ---
 
 def upload_image(request):
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
+
         if form.is_valid():
             upload_instance = form.save(commit=False)
-            
-            predicted_disease_obj = Disease.objects.first()
-            
-            if predicted_disease_obj:
-                upload_instance.predicted_disease = predicted_disease_obj
-                upload_instance.confidence_score = 99.2
-                upload_instance.save()
-                return redirect('upload_result', pk=upload_instance.pk) 
+            upload_instance.save()
+
+            image_path = upload_instance.image.path
+
+            # 🔥 AI PREDICTION
+            disease_name, confidence = predict_disease(image_path)
+
+            # 🚨 NOT A LEAF
+            # ✅ BETTER LOGIC
+            if confidence < 40:
+                disease_name = "non_leaf"
+                crop_status = "Not a leaf detected"
+
+            elif disease_name == "other_leaf":
+                crop_status = "Crop not found in database"
+
+            elif disease_name == "non_leaf":
+                crop_status = "Not a leaf detected"
+
             else:
-                return render(request, 'farmapp/upload.html', {
-                    'form': form, 
-                    'error': "Please add at least one Disease in the Admin Panel first!"
-                })
+    # Extract crop
+                if "___" in disease_name:
+                    crop_name = disease_name.split("___")[0]
+                else:
+                    crop_name = "unknown"
+
+                if Crop.objects.filter(name__iexact=crop_name).exists():
+                    crop_status = "Crop Found"
+                else:
+                    crop_status = "Crop not found in database"
+
+            # ✅ STORE IN SESSION
+            request.session['disease'] = disease_name
+            request.session['confidence'] = confidence
+            request.session['crop_status'] = crop_status
+
+            return redirect('upload_result', pk=upload_instance.pk)
+
     else:
-        form = UploadForm()
-    
+        form = UploadForm()  # ✅ THIS WAS MISSING
+
     return render(request, 'farmapp/upload.html', {'form': form})
 
 
 def upload_result(request, pk):
     upload = get_object_or_404(Upload, pk=pk)
-    disease = upload.predicted_disease
-    
+
+    # 🔥 GET AI RESULT
+    disease_name = request.session.get('disease', 'Unknown')
+    confidence = request.session.get('confidence', 0)
+    crop_status = request.session.get('crop_status', 'N/A')  # ✅ ADD THIS
+
+    # 🔥 GET SOLUTION FROM JSON
+    disease_data = solutions.get(disease_name, {})
+
     context = {
         'upload': upload,
-        'disease': disease,
+        'disease_name': disease_name,
+        'confidence': confidence,
+        'crop_status': crop_status,   # ✅ ADD THIS
+        'symptoms': "No symptoms available",
+        'scientific_cure': ", ".join(disease_data.get('scientific', [])),
+        'organic_cure': ", ".join(disease_data.get('organic', [])),
     }
-    
+
     return render(request, 'farmapp/result.html', context)
 
+
+# --- 👤 PROFILE ---
+
 from django.contrib.auth.decorators import login_required
-from .models import FarmerProfile
 
 @login_required
 def profile_view(request):
@@ -128,6 +170,9 @@ def profile_view(request):
     }
 
     return render(request, 'farmapp/profile.html', context)
+
+
+# --- 🚪 LOGOUT ---
 
 from django.contrib.auth import logout
 

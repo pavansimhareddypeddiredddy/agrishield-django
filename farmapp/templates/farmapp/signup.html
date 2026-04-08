@@ -237,6 +237,28 @@ body {
             </div>
 
             <button type="submit" class="btn">Signup</button>
+            <!-- ADD THIS BELOW SIGNUP BUTTON -->
+<div style="grid-column: span 2; text-align: center; margin-top: 10px;">
+    <span style="color: white; font-size: 13px;">Already have an account?</span><br>
+    
+    <a href="{% url 'login' %}" 
+       style="
+        display: inline-block;
+        margin-top: 8px;
+        padding: 10px 25px;
+        border-radius: 20px;
+        background: transparent;
+        border: 2px solid #00ff99;
+        color: #00ff99;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+       "
+       onmouseover="this.style.background='#00ff99'; this.style.color='black';"
+       onmouseout="this.style.background='transparent'; this.style.color='#00ff99';">
+       Login
+    </a>
+</div>
 
         </div>
     </form>
