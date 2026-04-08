@@ -88,7 +88,7 @@ import os
 DB_PATH = BASE_DIR / 'data' / 'db.sqlite3'
 
 if not DB_PATH.exists():
-    DB_PATH = BASE_DIR / 'db.sqlite3'
+    DB_PATH = BASE_DIR /'db.sqlite3'
 
 DATABASES = {
     'default': {
@@ -157,6 +157,9 @@ MEDIA_URL = '/media/'
 # The full filesystem path where uploaded files will be stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+ALLOWED_HOSTS = ["54.210.119.245", "localhost", "127.0.0.1"] 
 CSRF_TRUSTED_ORIGINS = [
     "http://54.210.119.245:30080",
 ]
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
