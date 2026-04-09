@@ -43,6 +43,9 @@
 
     /* 3. SEARCH BAR STYLING */
     .search-box {
+        max-width: 700px;
+        width: 100%;
+        margin:auto;
         border-radius: 50px;
         padding: 15px 25px;
         border: 2px solid #e0e0e0;
@@ -62,12 +65,16 @@
 
 <main class="container">
     <div class="row justify-content-center mb-5">
-        <div class="col-md-6">
-            <div class="input-group">
-                <input type="text" class="form-control search-box" placeholder="Search for a disease (e.g. Potato Blight)...">
-            </div>
-        </div>
+    <div class="col-md-10">
+        <form method="GET" action="{% url 'diseases' %}" class="my-4">
+            <input type="text"
+                   name="q"
+                   value="{{ query }}"
+                   placeholder="Search for a disease (e.g. Potato Blight)..."
+                   class="form-control search-box text-center">
+        </form>
     </div>
+</div>
 
     <div class="row g-4">
         {% for disease in diseases %}

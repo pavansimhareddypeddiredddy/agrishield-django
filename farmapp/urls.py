@@ -12,7 +12,7 @@ urlpatterns = [
     path('', signup_view, name='home'),
     # Information Lists
     path('crops/', views.crops_list, name='crops'),
-    path('diseases/', views.diseases_list, name='diseases'),
+    path('diseases/', views.diseases, name='diseases'),
     path('organic/', views.organic, name='organic'),
     
     # Detection Process

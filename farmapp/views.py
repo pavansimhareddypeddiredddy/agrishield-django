@@ -19,9 +19,31 @@ def crops_list(request):
     all_crops = Crop.objects.all().order_by('name') 
     return render(request, 'farmapp/crops.html', {'crops': all_crops})
 
-def diseases_list(request):
-    all_diseases = Disease.objects.all().order_by('name') 
-    return render(request, 'farmapp/diseases.html', {'diseases': all_diseases})
+from django.shortcuts import render
+from django.db.models import Q
+from .models import Disease
+
+
+def diseases(request):
+    query = request.GET.get('q', '').strip()
+
+    diseases = Disease.objects.select_related('crop').all()
+
+    if query:
+        query_clean = query.replace(" ", "_")
+
+        diseases = diseases.filter(
+            Q(name__icontains=query) |
+            Q(name__icontains=query_clean) |
+            Q(crop__name__icontains=query)
+        )
+
+    context = {
+        'diseases': diseases,
+        'query': query
+    }
+
+    return render(request, 'farmapp/diseases.html', context)
 
 def organic(request):
     return render(request, 'farmapp/organic.html')
@@ -90,24 +112,30 @@ def upload_image(request):
             # 🔥 AI PREDICTION
             disease_name, confidence = predict_disease(image_path)
 
+            # Convert to lowercase (VERY IMPORTANT)
+            disease_name_lower = disease_name.lower()
+
             # 🚨 NOT A LEAF
-            # ✅ BETTER LOGIC
-            if confidence < 40:
+            if confidence < 0.40:
                 disease_name = "non_leaf"
                 crop_status = "Not a leaf detected"
 
-            elif disease_name == "other_leaf":
+            elif disease_name_lower == "other_leaf":
                 crop_status = "Crop not found in database"
 
-            elif disease_name == "non_leaf":
+            elif disease_name_lower == "non_leaf":
                 crop_status = "Not a leaf detected"
 
             else:
-    # Extract crop
+                # ✅ HANDLE BOTH ___ AND _
                 if "___" in disease_name:
                     crop_name = disease_name.split("___")[0]
+                elif "_" in disease_name:
+                    crop_name = disease_name.split("_")[0]
                 else:
                     crop_name = "unknown"
+
+                crop_name = crop_name.lower()  # normalize
 
                 if Crop.objects.filter(name__iexact=crop_name).exists():
                     crop_status = "Crop Found"
@@ -116,16 +144,15 @@ def upload_image(request):
 
             # ✅ STORE IN SESSION
             request.session['disease'] = disease_name
-            request.session['confidence'] = confidence
+            request.session['confidence'] = confidence * 100  # fix % issue
             request.session['crop_status'] = crop_status
 
             return redirect('upload_result', pk=upload_instance.pk)
 
     else:
-        form = UploadForm()  # ✅ THIS WAS MISSING
+        form = UploadForm()
 
     return render(request, 'farmapp/upload.html', {'form': form})
-
 
 def upload_result(request, pk):
     upload = get_object_or_404(Upload, pk=pk)

@@ -3,18 +3,21 @@ from django.contrib.auth.models import User  # ✅ IMPORTANT
 
 
 class Disease(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    
-    image = models.ImageField(upload_to='disease_images/', blank=True, null=True)
-    
-    cause = models.TextField(help_text="Bacterial, Fungal, Viral, or Deficiency cause.")
+    crop = models.ForeignKey(
+        'Crop',
+        on_delete=models.CASCADE,
+        related_name='disease_list'  # 👈 changed name to avoid future conflicts
+    )
+
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='diseases/')
+    cause = models.TextField()
     symptoms = models.TextField()
     scientific_treatment = models.TextField()
     organic_treatment = models.TextField()
 
     def __str__(self):
-        return self.name
-    
+        return f"{self.name} ({self.crop.name})"
 
 class Crop(models.Model):
     name = models.CharField(max_length=100, unique=True)
