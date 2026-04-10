@@ -144,7 +144,7 @@ def upload_image(request):
 
             # ✅ STORE IN SESSION
             request.session['disease'] = disease_name
-            request.session['confidence'] = confidence * 100  # fix % issue
+            request.session['confidence'] = confidence  # fix % issue
             request.session['crop_status'] = crop_status
 
             return redirect('upload_result', pk=upload_instance.pk)
